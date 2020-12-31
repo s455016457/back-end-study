@@ -1,0 +1,7 @@
+[1009/163042.348:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163046.839:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163555.493:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163556.782:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163706.973:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163708.117:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources
+[1009/163715.696:WARNING:process_subrange_reader.cc(60)] range 0x1401b5000 + 0x5cb18 (64) outside of  range 0x140000000 + 0x1d5000 (64) for C:\Program Files\Story\Story-writer.exe resources

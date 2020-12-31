@@ -1,0 +1,265 @@
+﻿<#
+	ConnectionType = typeof(System.Data.SqlClient.SqlConnection).AssemblyQualifiedName;
+#><#+
+
+void LoadServerMetadata()
+{
+    LoadMainTable();
+    LoadDetailTable();
+}
+
+void LoadMainTable()
+{
+    if (!String.IsNullOrEmpty(MainTableName))
+    {
+        LoadTableMetadata(MainTableName, out MainTable);
+    }
+}
+
+void LoadDetailTable()
+{
+	if (!String.IsNullOrEmpty(DetailTableName))
+    {
+        LoadTableMetadata(DetailTableName, out DetailTable);
+    }
+}
+
+String GetParameterName(Column col){
+	col.ParameterName = String.Format("@{0}",col.MemberName);
+	return col.ParameterName;
+}
+
+List<String> GetParametersDeclare(List<Column> cols, List<Column> cols2){
+	return this.GetParametersDeclare(cols,cols2,false);
+}
+
+List<String> GetParametersDeclare(List<Column> cols, List<Column> cols2,bool useModel){
+	List<Column> newCloumns = new List<Column>();
+	newCloumns.AddRange(cols);
+	newCloumns.AddRange(cols2);
+	return this.GetParametersDeclare(newCloumns,useModel);
+}
+
+List<String> GetParametersDeclare(List<Column> cols){
+	return this.GetParametersDeclare(cols,false);
+}
+	
+List<String> GetParametersDeclare(List<Column> cols,bool useModel){
+	String prefix = useModel ? "model." : "";
+	List<String> list = new List<String>();
+	list.Add("List<SqlParameter> parameters = new List<SqlParameter>();");
+	foreach (Column col in cols)
+	{
+		list.Add(String.Format("parameters.Add(new SqlParameter(\"{0}\", SqlDbType.{1}));",col.ParameterName,col.SqlDbType));
+		if (col.IsNullable){
+			if (col.IsClass){
+				list.Add(String.Format("if ({0}{1} == null)",prefix,col.MemberName));
+				list.Add("{");
+				list.Add("    parameters[(parameters.Count - 1)].Value = DBNull.Value;");
+				list.Add("}");
+				list.Add("else");
+				list.Add("{");
+				list.Add(String.Format("    parameters[(parameters.Count - 1)].Value = {0}{1};",prefix,col.MemberName));
+				list.Add("}");
+				list.Add("");
+			}else{
+				list.Add(String.Format("if ({0}{1}.HasValue)",prefix,col.MemberName));
+				list.Add("{");
+				list.Add(String.Format("    parameters[(parameters.Count - 1)].Value = {0}{1};",prefix,col.MemberName));
+				list.Add("}");
+				list.Add("else");
+				list.Add("{");
+				list.Add("    parameters[(parameters.Count - 1)].Value = DBNull.Value;");
+				list.Add("}");
+				list.Add("");
+
+				//list.Add(String.Format("parameters[(parameters.Count-1)].Value = {0}{1};",prefix,col.MemberName));
+			}
+		}else{
+			if (col.IsClass){
+				list.Add(String.Format("if ({0}{1} == null)",prefix,col.MemberName));
+				list.Add("{");
+				list.Add(String.Format("    throw new Exception(\"{0}不能为空！\");",col.CommentName));
+				list.Add("}");
+				list.Add("else");
+				list.Add("{");
+				list.Add(String.Format("    parameters[(parameters.Count - 1)].Value = {0}{1};",prefix,col.MemberName));
+				list.Add("}");
+				list.Add("");
+			}else{
+				list.Add(String.Format("parameters[(parameters.Count - 1)].Value = {0}{1};",prefix,col.MemberName));
+			}
+		}
+	}
+	
+	return list;
+}
+
+void LoadTableMetadata(String tableName, out Table table)
+{
+    table = new Table();
+    table.TableName = tableName;
+    using (IDbConnection conn = GetConnection())
+    using (IDbCommand cmd = conn.CreateCommand())
+    {
+        cmd.CommandText = string.Format(@"
+SELECT isnull(e.[value],'') as [Describe] 
+FROM sys.extended_properties e 
+WHERE OBJECT_ID('{0}') = e.major_id and e.minor_id = 0 
+", tableName);
+        using (IDataReader reader = cmd.ExecuteReader())
+        {
+            if (reader.Read())
+            {
+                table.CommentName = Convert.ToString(reader["Describe"]);
+            }
+        }
+
+    	cmd.CommandText = string.Format(@"SELECT 
+		    o.name as [TableName]
+		    ,col.colid as [RowNumber] 
+		    ,col.name as [Name] 
+            ,isnull(e.[value],'') as [Describe]
+		    ,isnull(COLUMNPROPERTY(col.id,col.name,'IsIdentity'),0) as [IsIdentity]
+		    ,isnull(COLUMNPROPERTY(col.id,col.name,'IsIndexable'),0) as [IsIndexable]
+            ,case when pk.id is not null
+		     then 1 else 0 end as [IsPrimaryKey]
+		    ,case when exists(select 1 from sysforeignkeys where fkeyid = col.id and fkey = col.colid) 
+		     then 1 else 0 end as [IsForeignkey]
+		    ,case when exists(select 1 from sysforeignkeys where fkeyid = col.id and fkey = col.colid) 
+		    then (select top 1 object_name(rkeyid) from sysforeignkeys where fkeyid = col.id and fkey = col.colid) else null end as [ForeignTable]
+		    ,case when exists(select 1 from sysforeignkeys where fkeyid = col.id and fkey = col.colid) 
+		    then (select top 1 name from syscolumns,sysforeignkeys where id = rkeyid and colid = rkey and fkeyid = col.id and fkey = col.colid) else null end as [ForeignColumn]
+		    ,t.name as [DataType]
+		    ,col.length as [Length] 
+		    ,isnull(COLUMNPROPERTY(col.id,col.name,'Precision'),0) as [Precision]
+		    ,isnull(COLUMNPROPERTY(col.id,col.name,'Scale'),0) as [Scale]
+		    ,isnull(COLUMNPROPERTY(col.id,col.name,'AllowsNull'),0) as [AllowNull]
+		    ,case when cdefault = 0 then 0 else 1 end as [HasDefault]
+		    ,isnull(c.text,'') as [DefaultValue]
+		    FROM syscolumns col 
+		    left join systypes t on col.xtype=t.xusertype 
+		    inner join sysobjects o on col.id=o.id and o.xtype='U' and o.status>=0 
+		    left join syscomments c on col.cdefault=c.id 
+		    left join sys.extended_properties e on col.id = e.major_id and col.colid = e.minor_id  
+		    left join ( select sik.id ,sik.colid 
+                from sysindexkeys sik 
+                    inner join sysindexes si on si.id = sik.id and si.indid = sik.indid
+                    inner join sysobjects o2 on o2.name = si.name
+                where o2.xtype = 'PK' and sik.id = OBJECT_ID('{0}')
+            ) pk on pk.id = col.id and pk.colid = col.colid
+		    where o.name='{0}' 
+		    order by col.id,col.colorder", tableName);
+        using (IDataReader reader = cmd.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+				Column column = ReaderToColumn(reader);
+				column.Table = table;
+                if(String.IsNullOrEmpty(column.CommentName)){
+                    GetColumnCommentName(column);
+                }
+
+				GetParameterName(column);
+                table.Columns.Add(column);
+            }
+        }
+    }
+}
+
+Column ReaderToColumn(IDataReader reader)
+{
+    Column column = new Column();
+    column.ID = Convert.ToInt16(reader["RowNumber"]);
+    column.ColumnName = Convert.ToString(reader["Name"]);
+    column.CommentName = Convert.ToString(reader["Describe"]);
+    column.MemberName = Convert.ToString(reader["Name"]);
+    column.ColumnType = Convert.ToString(reader["DataType"]);
+    column.IsNullable = Convert.ToBoolean(reader["AllowNull"]);
+    column.IsIdentity = Convert.ToBoolean(reader["IsIdentity"]);
+    column.IsPrimaryKey = Convert.ToBoolean(reader["IsPrimaryKey"]);
+    column.Length = reader.IsDBNull(reader.GetOrdinal("Length")) ? 0 : Convert.ToInt64(reader["Length"]);
+    column.Precision = reader.IsDBNull(reader.GetOrdinal("Precision")) ? 0 : Convert.ToInt32(reader["Precision"]);
+    column.Scale = reader.IsDBNull(reader.GetOrdinal("Scale")) ? 0 : Convert.ToInt32(reader["Scale"]);
+    switch (column.ColumnType)
+    {
+        case "image": column.Type = "Byte[]"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.Image; break;
+        case "text": column.Type = "String"; column.DbType = DbType.String; column.SqlDbType = SqlDbType.Text; break;
+        case "binary": column.Type = "Byte[]"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.Binary; break;
+        case "tinyint": column.Type = "Byte"; column.DbType = DbType.Byte; column.SqlDbType = SqlDbType.TinyInt; break;
+        case "date": column.Type = "DateTime"; column.DbType = DbType.Date; column.SqlDbType = SqlDbType.Date; break;
+        case "time": column.Type = "DateTime"; column.DbType = DbType.Time; column.SqlDbType = SqlDbType.Time; break;
+        case "bit": column.Type = "Boolean"; column.DbType = DbType.Boolean; column.SqlDbType = SqlDbType.Bit; break;
+        case "smallint": column.Type = "Int16"; column.DbType = DbType.Int16; column.SqlDbType = SqlDbType.SmallInt; break;
+        case "decimal": column.Type = "Decimal"; column.DbType = DbType.Decimal; column.SqlDbType = SqlDbType.Decimal; break;
+        case "int": column.Type = "Int32"; column.DbType = DbType.Int32; column.SqlDbType = SqlDbType.Int; break;
+        case "smalldatetime": column.Type = "DateTime"; column.DbType = DbType.DateTime; column.SqlDbType = SqlDbType.SmallDateTime; break;
+        case "real": column.Type = "Single"; column.DbType = DbType.Single; column.SqlDbType = SqlDbType.Real; break;
+        case "money": column.Type = "Decimal"; column.DbType = DbType.Currency; column.SqlDbType = SqlDbType.Money; break;
+        case "datetime": column.Type = "DateTime"; column.DbType = DbType.DateTime; column.SqlDbType = SqlDbType.DateTime; break;
+        case "float": column.Type = "Double"; column.DbType = DbType.Double; column.SqlDbType = SqlDbType.Float; break;
+        case "numeric": column.Type = "Decimal"; column.DbType = DbType.Decimal; column.SqlDbType = SqlDbType.Decimal; break;
+        case "smallmoney": column.Type = "Decimal"; column.DbType = DbType.Currency; column.SqlDbType = SqlDbType.SmallMoney; break;
+        case "datetime2": column.Type = "DateTime"; column.DbType = DbType.DateTime2; column.SqlDbType = SqlDbType.DateTime2; break;
+        case "bigint": column.Type = "Int64"; column.DbType = DbType.Int64; column.SqlDbType = SqlDbType.BigInt; break;
+        case "varbinary": column.Type = "Byte[]"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.VarBinary; break;
+        case "timestamp": column.Type = "Byte[]"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.Timestamp; break;
+        case "sysname": column.Type = "String"; column.DbType = DbType.String; column.SqlDbType = SqlDbType.NVarChar; break;
+        case "nvarchar": column.Type = "String"; column.DbType = DbType.String; column.SqlDbType = SqlDbType.NVarChar; break;
+        case "varchar": column.Type = "String"; column.DbType = DbType.AnsiString; column.SqlDbType = SqlDbType.VarChar; break;
+        case "ntext": column.Type = "String"; column.DbType = DbType.String; column.SqlDbType = SqlDbType.NText; break;
+        case "uniqueidentifier": column.Type = "Guid"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.UniqueIdentifier; break;
+        case "datetimeoffset": column.Type = "DateTimeOffset"; column.DbType = DbType.DateTimeOffset; column.SqlDbType = SqlDbType.DateTimeOffset; break;
+        case "sql_variant": column.Type = "Object"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.Variant; break;
+        case "xml": column.Type = "String"; column.DbType = DbType.Xml; column.SqlDbType = SqlDbType.Xml; break;
+
+        case "char":
+            column.Type = Convert.ToInt32(reader["Length"]) == 1 ? "Char" : "String";
+            column.DbType = DbType.AnsiStringFixedLength;
+            column.SqlDbType = SqlDbType.Char;
+            break;
+
+        case "nchar":
+            column.Type = Convert.ToInt32(reader["Length"]) == 1 ? "Char" : "String";
+            column.DbType = DbType.StringFixedLength;
+            column.SqlDbType = SqlDbType.NChar;
+            break;
+
+        default: column.Type = "Byte[]"; column.DbType = DbType.Binary; column.SqlDbType = SqlDbType.Binary; break;
+    }
+
+    switch (column.Type)
+    {
+        case "String":
+        case "Object":
+        case "Byte[]": column.IsClass = true; break;
+    }
+
+    if (column.IsNullable && !column.IsClass)
+        column.Type += "?";
+
+    return column;
+}
+
+void GetColumnCommentName(Column col){
+	try{
+		using (IDbConnection conn = GetConnection())
+	    using (IDbCommand cmd = conn.CreateCommand())
+	    {
+	    	cmd.CommandText = string.Format(@"IF OBJECT_ID('TABLEFIELDDICT') IS NOT NULL SELECT CHNNAME FROM TABLEFIELDDICT WHERE TABLENAME='{1}' AND FIELDNAME='{0}' ELSE SELECT CHNNAME FROM FIELDDICT WHERE FIELDNAME='{0}' ",col.ColumnName,col.Table.TableName);
+			using (IDataReader reader = cmd.ExecuteReader())
+	        {
+	            if (reader.Read()){
+	    			col.CommentName = Convert.ToString(reader["CHNNAME"]);
+				}else{
+					col.CommentName = col.MemberName;
+				}
+			}
+		}
+	}
+	catch{
+		col.CommentName = col.MemberName;
+	}
+}
+
+#>

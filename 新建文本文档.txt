@@ -1,0 +1,20 @@
+git.exe push -v --progress "gitee" master:master
+Counting objects: 210, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (192/192), done.
+POST git-receive-pack (chunked)
+Writing objects: 100% (210/210), 471.80 MiB | 1.11 MiB/s, done.
+Total 210 (delta 38), reused 0 (delta 0)
+remote: Resolving deltas: 100% (38/38), completed with 2 local objects.
+remote: Powered by GITEE.COM [GNK-5.0]
+remote: error: File: d9c7d19d9eb05a47e7d046b306a64d8526548abd 127.52 MB, exceeds 100.00 MB.
+remote: Use command below to see the filename:
+remote: git rev-list --objects --all | grep d9c7d19d9eb05a47e7d046b306a64d8526548abd
+remote: Please remove the file from history and try again. (https://gitee.com/help/articles/4232)
+Pushing to https://gitee.com/455016457/back-end-study.git
+To https://gitee.com/455016457/back-end-study.git
+! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'https://gitee.com/455016457/back-end-study.git'
+
+
+git 未能顺利结束 (退出码 1) (447219 ms @ 2020/12/30 19:57:53)

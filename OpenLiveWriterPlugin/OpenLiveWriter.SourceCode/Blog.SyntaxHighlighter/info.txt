@@ -1,0 +1,12 @@
+The files in this folder is customized SyntaxHighlighter that comes with BlogEngine.NET version 2 with the 
+following updates (made by David Pokluda):
+
+	*added FSharp script (Scripts\syntaxhighlighter)
+	*updated PowerShell script (Scripts\syntaxhighlighter)
+	*updated SyntaxHighlighter.cs script (AppCode\Extensions\SyntaxHighlighter.cs)
+
+For more information see these links:
+
+    *SyntaxHighlighter: http://alexgorbatchev.com/wiki/SyntaxHighlighter. 
+    *BlogEngine.NET   : http://www.dotnetblogengine.net
+    *David Pokluda    : http://blog.pokluda.com

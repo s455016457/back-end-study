@@ -1,0 +1,94 @@
+==============================WebApiTestClient==============================
+WebApiTestClient（A simple Test Client for asp.net Web Api help page）  用于显示WEBAPI接口文档，并提供测试工具
+设置过程：
+1、在Nuget中引入WebApiTestClient组件
+2、配置生成xml的路径。我们在项目上面点右键→属性→生成标签页配置xml的路径  App_Data/WebApiTestClient.XML
+3、在xml的读取路径：在 Areas->HelpPage->App_Start 的HelpPageConfig.cs的Register方法里面配置一句话，指定xml的读取路径。
+config.SetDocumentationProvider(new XmlDocumentationProvider(HttpContext.Current.Server.MapPath("~/App_Data/WebApiTestClient.XML")));
+4、在Areas/HelpPage/Views/Help/Api.cshtml文件中@model HelpPageApiModel代码下添加以下代码
+@section Scripts {
+    @Html.DisplayForModel("TestClientDialogs")
+    @Html.DisplayForModel("TestClientReferences")
+}
+5、AIP接口中添加注释即可，如：
+	/// <summary>
+    /// 测试API Test Client
+    /// </summary>
+    public class TestChargingDataController : ApiController
+    {
+        /// <summary>
+        /// 得到所有数据
+        /// </summary>
+        /// <returns>返回数据</returns>
+        [HttpGet]
+        public string GetAllChargingData()
+        {
+            return "ChargingData";
+        }
+
+        /// <summary>
+        /// 得到当前Id的所有数据
+        /// </summary>
+        /// <param name="id">参数Id</param>
+        /// <returns>返回数据</returns>
+        [HttpGet]
+        public string GetAllChargingData(string id)
+        {
+            return "ChargingData" + id ;
+        }
+	}
+
+==============================log4net==============================
+log4net 日志记录
+1、在Nuget中引入log4net组件
+2、需在WEBAPI、MVC、WEBFORM程序中加入log4.netConfig配置
+配置内容：
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+  </configSections>
+
+  <log4net>
+    <!--定义输出到文件中-->
+    <appender name="LoggerServiceAppender" type="log4net.Appender.RollingFileAppender">
+      <!--输出日志文件的路径-->
+      <file value="App_Data\Logs\ApplicationLogger.log" />
+      <!--输出日志时自动向后追加-->
+      <appendToFile value="true" />
+      <!--防止多线程时不能写Log,官方说线程非安全-->
+      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+      <!--置为true,当前最新日志文件名永远为file节中的名字-->
+      <staticLogFileName value="false" />
+      <!--日志以大小作为备份样式，还有一种方式是Date（日期）-->
+      <rollingStyle value="size" />
+      <countDirection value="-1" />
+      <!--单个日志的最大容量,(可用的单位:KB|MB|GB)不要使用小数,否则会一直写入当前日志-->
+      <maximumFileSize value="1MB" />
+      <!--日志最大个数,都是最新的-->
+      <maxSizeRollBackups value="10" />
+      <datePattern value="&quot;.&quot;yyyy-MM-dd-HH-mm-ss&quot;.log&quot;" />
+      <layout type="log4net.Layout.PatternLayout">
+        <!--每条日志末尾的文字说明-->
+        <!--<footer value="**************************************************************" />-->
+        <!--输出格式-->
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline" />
+      </layout>
+    </appender>
+
+    <logger name="ApplicationLogger">
+      <level value="ALL"/>
+      <appender-ref ref="Info" />
+      <appender-ref ref="LoggerServiceAppender" />
+    </logger>
+
+  </log4net>
+</configuration>
+3、获得Log对象：
+LoggerService.LoggerService.Start();//第一次启动时执行
+LoggerService.LoggerService.ApplicationLogger
+
+
+==============================Unity==============================
+Unity  IOC 翻转注入
+1、在Nuget中引入Unity组件

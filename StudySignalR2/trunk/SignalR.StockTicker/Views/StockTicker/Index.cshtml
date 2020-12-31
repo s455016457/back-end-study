@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "股市广播";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    table{
+        border-width:1px;
+        border-style:solid;
+        border-color:black;
+    }
+        table td,th {
+            border-width: 1px;
+            border-style: solid;
+            border-color: black;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        table thead{
+            background-color:dimgray;
+        }
+
+        table thead tr{
+            height:30px;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: grey;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: darkgrey;
+        }
+</style>
+<h2>股市广播</h2>
+
+<table id="stockView">
+        <thead>
+            <tr>
+                <th>股票标示</th>
+                <td>开市价格</td>
+                <td>价格</td>
+                <td>变更</td>
+                <td>变更幅度</td>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: stocks">
+            <tr>
+                <th data-bind="text: Symbol"></th>
+                <td data-bind="text: OpenDayPrice"></td>
+                <td data-bind="text: Price"></td>
+                <td data-bind="text: ChangeDescr"></td>
+                <td data-bind="text: PercentChangeDescr"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+<button id="openMarket">开市</button>
+<button id="closeMarket">关市</button>
+
+@section scripts{
+    <script src="~/Scripts/knockout-3.5.1.js"></script><!--  knockout2.0.0版本  与jQuery冲突，如需要同时使用，需要将knockout更新到最新版本 -->
+    <script src="~/Scripts/knockout.mapping-latest.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    
+    <script type="text/javascript">
+
+        $(function () {
+            var data = {};
+            // knockout.mapping
+            // https://knockoutjs.com/documentation/plugins-mapping.html
+            // 使用“create”自定义对象构造
+            var mapping = {
+                'stocks': {
+                    create: function (options) {
+                        console.log(options);
+                        return new stockModel(options.data);
+                    }
+                }
+            }
+
+            var stockModel = function (data) {
+                ko.mapping.fromJS(data, {}, this);
+                this.ChangeDescr = ko.computed(function () {
+                    var change = this.Change();
+                    return change + (change >= 0 ? "▲" : "▼");
+                }, this);
+
+                this.PercentChangeDescr = ko.computed(function () {
+                    var percentChange = this.PercentChange();
+                    percentChange = percentChange * 100;
+                    return percentChange.toFixed(2) + "%";
+                }, this);
+            };
+
+            var viewModel;
+
+            var stockTickerMini = $.connection.stockTickerMini;
+
+            stockTickerMini.client.updateStockPrice = function (stock) {
+                var stocks = data.stocks;
+                for (let stk of viewModel.stocks()) {
+                    if (stk.Symbol() === stock.Symbol) {
+                        stk.Price(stock.Price);
+                        stk.Change(stock.Change);
+                        stk.OpenDayPrice(stock.OpenDayPrice);
+                        stk.PercentChange(stock.PercentChange);
+                    }
+                }
+            }
+
+            $.connection.hub.logging = true;
+            $.connection.hub.start().done(function () {
+                stockTickerMini.server.getAllStocks().done(function (stocks) {
+                    data.stocks = stocks;
+                    viewModel = ko.mapping.fromJS(data, mapping);
+                    ko.applyBindings(viewModel);
+                });
+            });        
+
+            $("#openMarket").on("click", function () {
+                stockTickerMini.server.openMarket();
+                stockTickerMini.server.getAllStocks().done(function (stocks) {
+                    for (let stock of stocks) {
+                        stockTickerMini.client.updateStockPrice(stock);
+                    }
+                });
+            });
+
+            $("#closeMarket").on("click", function () {
+                stockTickerMini.server.closeMarket();
+            });
+        });
+
+    </script>
+}
+

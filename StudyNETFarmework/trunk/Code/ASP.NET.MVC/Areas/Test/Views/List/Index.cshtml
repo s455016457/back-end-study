@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ASP.NET.MVC.Areas.Test.Models.User>
+
+
+<div id="loading">
+    数据加载中。。。
+</div>
+还有好多内容<br />
+还有好多内容<br />
+还有好多内容<br />
+还有好多内容<br />
+还有好多内容<br />
+      <div>
+
+            @using (Ajax.BeginForm(new AjaxOptions
+            {
+                HttpMethod="Get",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "replaceList"
+            }))
+            {
+              <input type="search" name="searchText" style="width:100%" />
+              <input type="submit" value="查询" />
+          }
+      </div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("_list",Model)

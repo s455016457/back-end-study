@@ -1,0 +1,505 @@
+﻿<#@ assembly name="System.Core"#>
+<#@ assembly name="System.Data"#>
+<#@ assembly name="System.Windows.Forms"#>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Windows.Forms" #>
+<#+
+
+String ConnectionString 		= null;
+String ConnectionType 			= null;
+String DataProviderAssembly 	= null;
+String ModelNamespace           = null;
+String BusinessNamespace		= null;
+String BusinessClassName		= null;
+String MainTableName			= null;
+String DetailTableName			= null;
+String MainTableClassName		= null;
+String DetailTableClassName		= null;
+String MainTableInsertExcludeColumns 	= null;
+String MainTableUpdateExcludeColumns 	= null;
+String DetailTableInsertExcludeColumns 	= null;
+String DetailTableUpdateExcludeColumns 	= null;
+String MainTableBookMarkColumn		    = null;
+String MainTableBookMarkModule		    = null;
+String DetailTableBookMarkColumn		= null;
+String DetailTableBookMarkModule		= null;
+String MainName                         = "";
+String DetailName                       = "Detail";
+Table MainTable 				= null;
+Table DetailTable 				= null;
+
+Boolean   RenderField          = false;
+Boolean   RenderBackReferences = true;
+Boolean   RenderForeignKeys    = true;
+
+//主表与明细表的主键对应
+String    KeyMap                        = null;
+
+List<T> CreateList<T>(T item)
+{
+	return new List<T>();
+}
+
+System.Data.IDbConnection GetConnection()
+{
+	Type connType = null;
+
+	if (DataProviderAssembly != null)
+	{
+		try
+		{
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.LoadFile(DataProviderAssembly);
+			connType = assembly.GetType(ConnectionType);
+		}
+		catch
+		{
+		}
+	}
+
+	if (connType == null)
+		connType = Type.GetType(ConnectionType);
+
+	System.Data.IDbConnection conn = (System.Data.IDbConnection)Activator.CreateInstance(connType);
+	conn.ConnectionString = ConnectionString;
+	conn.Open();
+	return conn;
+}
+
+
+void LoadMetadata()
+{
+	LoadServerMetadata();
+	/*
+	List<String> keyWords = new List<String>(){
+		"abstract", "as",       "base",     "Boolean",    "break",     "byte",     "case",       "catch",     "char",    "checked",
+		"class",    "const",    "continue", "decimal", "default",   "delegate", "do",         "double",    "else",    "enum",
+		"event",    "explicit", "extern",   "false",   "finally",   "fixed",    "float",      "for",       "foreach", "goto",
+		"if",       "implicit", "in",       "int",     "interface", "internal", "is",         "lock",      "long",    "new",
+		"null",     "object",   "operator", "out",     "override",  "params",   "private",    "protected", "public",  "readonly",
+		"ref",      "return",   "sbyte",    "sealed",  "short",     "sizeof",   "stackalloc", "static",    "struct",  "switch",
+		"this",     "throw",    "true",     "try",     "typeof",    "uint",     "ulong",      "unchecked", "unsafe",  "ushort",
+		"using",    "virtual",  "volatile", "void",    "while"
+	};
+*/
+	if(MainTable != null)
+	{
+        List<String> _mainTableInsertExcludeCloumns = new List<String>();
+        List<String> _mainTableUpdateExcludeColumns = new List<String>();
+        if(!String.IsNullOrEmpty(MainTableUpdateExcludeColumns)){
+            _mainTableUpdateExcludeColumns.AddRange(MainTableUpdateExcludeColumns.Split(','));
+        }
+
+        if(!String.IsNullOrEmpty(MainTableInsertExcludeColumns)){
+            _mainTableInsertExcludeCloumns.AddRange(MainTableInsertExcludeColumns.Split(','));
+        }
+
+		MainTable.ClassName = MainTableClassName;
+		foreach (Column col in MainTable.Columns){
+			if (col.IsPrimaryKey)
+				MainTable.Keys.Add(col);
+			else{
+				MainTable.Values.Add(col);
+				if(!_mainTableUpdateExcludeColumns.Contains(col.ColumnName,StringComparer.OrdinalIgnoreCase)){
+					MainTable.UpdateClumns.Add(col);
+				}
+			}
+			
+			if(!_mainTableInsertExcludeCloumns.Contains(col.ColumnName,StringComparer.OrdinalIgnoreCase)){
+				MainTable.InsertClumns.Add(col);
+			}
+		}
+		
+		if(MainTable.Keys.Count == 0){
+			this.Error("主表缺少主键！");
+		}
+	}
+	
+	if(DetailTable != null)
+	{
+	    List<String> DetailTableUpdateExcludeColumnList = new List<String>();
+	    List<String> DetailTableInsertExcludeCloumnList = new List<String>();
+        if(!String.IsNullOrEmpty(DetailTableUpdateExcludeColumns)){
+            DetailTableUpdateExcludeColumnList.AddRange(DetailTableUpdateExcludeColumns.Split(",".ToCharArray()));
+        }
+
+        if(!String.IsNullOrEmpty(DetailTableInsertExcludeColumns)){
+            DetailTableInsertExcludeCloumnList.AddRange(DetailTableInsertExcludeColumns.Split(",".ToCharArray()));
+        }
+
+    	DetailTable.ClassName = DetailTableClassName;
+		foreach (Column col in DetailTable.Columns){
+            if(String.IsNullOrEmpty(col.CommentName)){
+			    this.GetColumnCommentName(col);
+            }
+
+            if(!String.IsNullOrEmpty(DetailTableBookMarkColumn)&& !String.IsNullOrEmpty(DetailTableBookMarkModule)){
+                if(String.Equals(DetailTableBookMarkColumn,col.ColumnName)){
+                    DetailTable.BookMarkColumn = col;
+                    DetailTable.BookMarkModule = DetailTableBookMarkModule;
+                }
+            }
+
+			if (col.IsPrimaryKey){
+				DetailTable.Keys.Add(col);
+            }
+			else{
+				DetailTable.Values.Add(col);
+				if(!DetailTableUpdateExcludeColumnList.Contains(col.ColumnName)){
+					DetailTable.UpdateClumns.Add(col);
+				}
+			}
+			
+			if(!DetailTableInsertExcludeCloumnList.Contains(col.ColumnName) && !col.IsIdentity){
+				DetailTable.InsertClumns.Add(col);
+			}
+		}
+		
+		if(DetailTable.Keys.Count == 0){
+			this.Error("明细表缺少主键！");
+		}
+	}
+}
+
+//数据表的实体描述
+public partial class Table
+{
+	//所有者
+	public String       Owner;
+	//表名
+	public String       TableName;
+	//备注名称
+	public String       CommentName;
+	//类名
+	public String       ClassName;
+	//基类名
+	public String       BaseClassName;
+	//是否是视图
+	public Boolean      IsView;
+	//列集合
+	public List<Column> Columns = new List<Column>();
+	//主键集合
+	public List<Column> Keys = new List<Column>();
+	//非主键列集合
+	public List<Column> Values = new List<Column>();
+	//更新列集合
+	public List<Column> UpdateClumns = new List<Column>();
+	//插入列集合
+	public List<Column> InsertClumns = new List<Column>();
+    //自动编号列
+    public Column BookMarkColumn = null;
+    //自动编号模组
+    public String BookMarkModule = null;
+}
+
+//列的实体描述
+public partial class Column
+{
+	//表
+	public Table        Table;
+	//编号
+	public Int32        ID;
+	//列名
+	public String       ColumnName; 
+	//实体类中的名称
+	public String       MemberName; 
+	//备注名称
+	public String       CommentName; 
+	//参数名称
+	public String       ParameterName; 
+	//可空
+	public Boolean      IsNullable;
+	//自增列
+	public Boolean      IsIdentity;
+	//实体类型
+	public String       Type;
+	//数据库类型
+	public String       ColumnType;
+	//是否是Object
+	public Boolean      IsClass;
+	//DbType
+	public DbType       DbType;
+	//SqlDbType
+	public SqlDbType    SqlDbType;
+	//长度
+	public Int64        Length;
+	//精度
+	public Int32        Precision;
+	//
+	public Int32        Scale;
+	//主键
+	public Boolean 		IsPrimaryKey;
+}
+
+public void WriteBeginNamespace(String name){
+	this.WriteLine("namespace {0}",name);
+	this.WriteLine("{");
+}
+
+public void WriteEndNamespace(){
+	this.WriteLine("}");
+}
+
+public void WriteBeginClass(String name){
+	WriteBeginClass(name,1);
+}
+
+public void WriteBeginClass(String name,String baseClass){
+	WriteBeginClass(name,baseClass,1);
+}
+
+public void WriteBeginClass(String name,Int32 indent){
+	WriteBeginClass(name,null,indent);
+}
+
+public void WriteBeginClass(String name,String baseClass,Int32 indent){
+	WriteBeginClass(name,baseClass,indent,false);
+}
+
+public void WriteBeginPartialClass(String name){
+	WriteBeginPartialClass(name,1);
+}
+
+public void WriteBeginPartialClass(String name,String baseClass){
+	WriteBeginPartialClass(name,baseClass,1);
+}
+
+public void WriteBeginPartialClass(String name,Int32 indent){
+	WriteBeginPartialClass(name,null,indent);
+}
+
+public void WriteBeginPartialClass(String name,String baseClass,Int32 indent){
+	WriteBeginClass(name,baseClass,indent,true);
+}
+
+public void WriteBeginClass(String name,String baseClass,Int32 indent,Boolean isPartial){
+	WriteIndent(indent);
+	if(String.IsNullOrEmpty(baseClass))
+		this.WriteLine("public {1}class {0}",name,isPartial? "partial ":"" );
+	else
+		this.WriteLine("public {2}class {0} : {1}",name, baseClass,isPartial? "partial ":"" );
+
+	WriteIndent(indent);
+	this.WriteLine("{");
+}
+
+public void WriteEndClass(){
+	WriteEndClass(1);
+}
+
+public void WriteEndClass(Int32 indent){
+	WriteIndent(indent);
+	this.WriteLine("}");
+}
+
+public void WriteAttribute(String attrib){
+	WriteAttribute(attrib,1);
+}
+	
+public void WriteAttribute(String attrib,Int32 indent){
+	WriteIndent(indent);
+	this.WriteLine("[{0}]", attrib);
+}
+
+public void WriteLineComment(String comment){
+	WriteLineComment(comment,0);
+}
+
+public void WriteLineComment(String comment,Int32 indent){
+	WriteIndent(indent);
+	this.WriteLine("//{0}",comment);
+}
+
+public void WriteSummary(String comment){
+	WriteSummary(comment,0);
+}
+
+public void WriteSummary(String summary,Int32 indent){
+	WriteIndent(indent);
+	this.WriteLine("/// <summary>");
+	WriteIndent(indent);
+	this.WriteLine("/// {0}",summary);
+	WriteIndent(indent);
+	this.WriteLine("/// </summary>");
+}
+
+void WriteIndent(Int32 indent){
+	WriteSpace(4 * indent);
+}
+
+void WriteSpace(Int32 len)
+{
+	while (len-- > 0)
+		Write(" ");
+}
+
+void Write(Int32 indent,String textToAppend){
+	WriteSpace(4 * indent);
+	this.Write(textToAppend);
+}
+
+void Write(Int32 indent,String format,params object[] args){
+	WriteSpace(4 * indent);
+	this.Write(format,args);
+}
+
+void WriteLine(){
+	this.WriteLine("");
+}
+
+void WriteLine(Int32 indent,String textToAppend){
+	WriteSpace(4 * indent);
+	this.WriteLine(textToAppend);
+}
+
+void WriteLine(Int32 indent,String format,params object[] args){
+	WriteSpace(4 * indent);
+	this.WriteLine(format,args);
+}
+
+String GetWhereSql(List<Column> columns)
+{
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+	StringBuilder sbWhere = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbWhere.AppendFormat("AND {0}={1} ",col.ColumnName,col.ParameterName);
+	}
+	
+	sbWhere.Remove(0, 3);
+	return sbWhere.ToString();
+}
+
+String GetWhereSql(List<Column> columns, Boolean useKeyMap)
+{
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+    Dictionary<String,String> keyMapDict = GetKeyMapDict();
+	StringBuilder sbWhere = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbWhere.AppendFormat("AND {0}={1} "
+	        ,(useKeyMap ? (keyMapDict.ContainsKey(col.ColumnName) ? keyMapDict[col.ColumnName]: col.ColumnName) : col.ColumnName)
+	        ,col.ParameterName
+        );
+	}
+
+	sbWhere.Remove(0, 3);
+	return sbWhere.ToString();
+}
+
+String GetColumnsSql(List<Column> columns)
+{
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+	StringBuilder sbWhere = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbWhere.AppendFormat(",{0}", col.ColumnName);
+	}
+	
+	sbWhere.Remove(0, 1);
+	return sbWhere.ToString();
+}
+
+String GetParameterSql(List<Column> columns)
+{
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+	StringBuilder sbWhere = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbWhere.AppendFormat(",{0}",col.ParameterName);
+	}
+	
+	sbWhere.Remove(0, 1);
+	return sbWhere.ToString();
+}
+
+String GetAssignSql(List<Column> columns)
+{
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+	StringBuilder sbWhere = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbWhere.AppendFormat(",{0}={1}",col.ColumnName,col.ParameterName);
+	}
+	
+	sbWhere.Remove(0, 1);
+	return sbWhere.ToString();
+}
+
+String GetFunctionParameters(List<Column> columns){
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+	StringBuilder sbParameters = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbParameters.AppendFormat(", {0} {1}",col.Type, col.MemberName);
+	}
+	
+	sbParameters.Remove(0, 2);
+	return sbParameters.ToString();
+}
+
+String GetFunctionParametersCall(List<Column> columns){
+	return this.GetFunctionParametersCall(columns, false);
+}
+
+String GetFunctionParametersCall(List<Column> columns, Boolean useModel){
+	return this.GetFunctionParametersCall(columns, useModel, false);
+}
+
+String GetFunctionParametersCall(List<Column> columns, Boolean useModel, Boolean useKeyMap){
+    if(columns == null || columns.Count == 0){
+        return String.Empty;
+    }
+
+    Dictionary<String,String> keyMapDict = GetKeyMapDict();
+	StringBuilder sbParameters = new StringBuilder();
+	foreach (Column col in columns)
+	{
+	 	sbParameters.AppendFormat(", {0}{1}",(useModel ? "model." : ""),(useKeyMap ? (keyMapDict.ContainsKey(col.MemberName) ? keyMapDict[col.MemberName]: col.MemberName) : col.MemberName));
+	}
+	
+	sbParameters.Remove(0, 2);
+	return sbParameters.ToString();
+}
+
+Dictionary<String,String> GetKeyMapDict(){
+    Dictionary<String,String> keyMapDict = new Dictionary<String,String>();
+    if(!String.IsNullOrEmpty(KeyMap)){
+        string[] pairs = KeyMap.Split(new char[] { ',' });
+        if (pairs != null && pairs.Length > 0)
+        {
+            foreach (string pair in pairs)
+            {
+                string[] oneParam = pair.Split(new char[] { '=' }, 2);
+                if (oneParam != null && oneParam.Length == 2)
+                {
+                    keyMapDict.Add(oneParam[0], oneParam[1]);
+                }
+            }
+        }
+     }
+
+     return keyMapDict;
+}
+
+#>

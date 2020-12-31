@@ -1,0 +1,50 @@
+2019-07-08 15:22:02,547 [1] ERROR Plugin.Manager.PluginManageInit [(null)] - System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll” ---> System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll”
+
+
+   在 System.Reflection.AssemblyName.nGetFileInformation(String s)
+   在 System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
+   在 Plugin.Manager.PluginManageInit.Initialize() 位置 E:\study\后端学习\StudyNETFarmework\trunk\Test\TestMvcPlugin\Plugin.Manager\PluginManageInit.cs:行号 86
+
+
+2019-08-19 11:39:32,804 [1] ERROR Plugin.Manager.PluginManageInit [(null)] - System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll” ---> System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll”
+
+
+   在 System.Reflection.AssemblyName.nGetFileInformation(String s)
+   在 System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
+   在 Plugin.Manager.PluginManageInit.Initialize() 位置 E:\study\后端学习\StudyNETFarmework\trunk\Test\TestMvcPlugin\Plugin.Manager\PluginManageInit.cs:行号 86
+
+
+2019-08-19 11:43:51,301 [13] ERROR Plugin.Manager.PluginManageInit [(null)] - System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll” ---> System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll”
+
+
+   在 System.Reflection.AssemblyName.nGetFileInformation(String s)
+   在 System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
+   在 Plugin.Manager.PluginManageInit.Initialize() 位置 E:\study\后端学习\StudyNETFarmework\trunk\Test\TestMvcPlugin\Plugin.Manager\PluginManageInit.cs:行号 86
+
+
+2019-08-19 11:45:48,154 [13] ERROR Plugin.Manager.PluginManageInit [(null)] - System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll” ---> System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll”
+
+
+   在 System.Reflection.AssemblyName.nGetFileInformation(String s)
+   在 System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
+   在 Plugin.Manager.PluginManageInit.Initialize() 位置 E:\study\后端学习\StudyNETFarmework\trunk\Test\TestMvcPlugin\Plugin.Manager\PluginManageInit.cs:行号 86
+
+
+2019-08-19 11:48:20,390 [13] ERROR Plugin.Manager.PluginManageInit [(null)] - System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll” ---> System.BadImageFormatException: 未能加载文件或程序集“Microsoft.DiaSymReader.Native.x86.dll”或它的某一个依赖项。该模块应包含一个程序集清单。
+文件名:“Microsoft.DiaSymReader.Native.x86.dll”
+
+
+   在 System.Reflection.AssemblyName.nGetFileInformation(String s)
+   在 System.Reflection.AssemblyName.GetAssemblyName(String assemblyFile)
+   在 Plugin.Manager.PluginManageInit.Initialize() 位置 E:\study\后端学习\StudyNETFarmework\trunk\Test\TestMvcPlugin\Plugin.Manager\PluginManageInit.cs:行号 86
+
+

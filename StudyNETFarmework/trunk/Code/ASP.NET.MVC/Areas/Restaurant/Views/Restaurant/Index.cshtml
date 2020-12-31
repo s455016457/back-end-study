@@ -1,0 +1,23 @@
+﻿@model IPagedList<ListModel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@*<form method="get" action="@Url.Action("Index")">
+        <input type="search" name="searchTerm" />
+        <input type="submit" value="Search" />
+    </form>*@
+
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    HttpMethod = "get",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "replaceView"
+}))
+{
+    <input type="search" name="searchTerm" data-autocomplete="@Url.Action("Autocomplete","Restaurant")" />
+    <input type="submit" value="Search" />
+}
+
+@Html.Partial("_list", Model)

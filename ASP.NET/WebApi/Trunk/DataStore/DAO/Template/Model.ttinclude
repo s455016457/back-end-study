@@ -1,0 +1,28 @@
+﻿<#+
+
+    void WiriteProperty(Column col){
+        WiriteProperty(col,2);
+    }
+
+    void WiriteProperty(Column col,Int32 indent){
+        WriteSummary(col.CommentName,indent);
+        WriteIndent(indent);
+		if(col.SqlDbType == SqlDbType.SmallDateTime){
+			this.WriteLine("[Column(TypeName = \"smalldatetime\")]");
+        WriteIndent(indent);
+		}
+        this.WriteLine("public {0} {1} {{ get; set; }}",col.Type=="Char?"?"String":col.Type,col.MemberName);
+        this.WriteLine();
+    }
+
+    void WiritePropertyMapping(Column col){
+        WiritePropertyMapping(col,2);
+    }
+
+    void WiritePropertyMapping(Column col,Int32 indent){
+        WriteSummary(col.CommentName,indent);
+        WriteIndent(indent);
+        this.WriteLine("public {0} {1} {{ get; set; }}",col.Type,col.MemberName);
+        this.WriteLine();
+    }
+#>

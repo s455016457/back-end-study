@@ -1,0 +1,59 @@
+@using Example1.Models.Po;
+
+@model IndexViewModel;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style type="text/css">
+table{
+    width:100%;
+}
+
+table thead tr th,table tbody tr td{
+    border: ridge 1px black;
+}
+
+table thead tr th{
+    text-align: center;
+}
+
+table tbody tr:nth-child(odd){
+    background-color: #dfe4ea;
+}
+
+table tbody tr:nth-child(even){
+    background-color: #ced6e0;
+}
+
+table tbody tr:hover{
+    background-color: #a4b0be;
+}
+
+</style>
+
+<h1>采购订单列表</h1>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>采购订单号</th>
+                <th>供应商编号</th>
+                <th>合计金额</th>
+                <th>版本号</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PoModel row in Model.Pos)
+            {
+                <tr>
+                    <td>@row.PoNum</td>
+                    <td>@row.VenId</td>
+                    <td>@row.TotalAmount</td>
+                    <td>@row.RowVersion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

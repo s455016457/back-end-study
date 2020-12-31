@@ -1,0 +1,139 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ output extension=".Dao.cs" #>
+<#@ include file="../../Template/Common.ttinclude"#>
+<#@ include file="../../Template/MSSql.ttinclude"#>
+<#@ include file="../../Template/Model.ttinclude"#>
+    
+<#ConnectionString 		= "Server=.;Database=SWERP;Integrated Security=SSPI";
+//ConnectionString = "Server=DBHost;Database=DBName;Uid=User;Pwd=Password";
+ModelNamespace          = "SWERP.DAO.EF";
+BusinessNamespace		= "";
+MainTableName			= "ACC";
+DetailTableName			= "";
+MainTableClassName		= "Acc";
+DetailTableClassName	= "";
+LoadMetadata();#>
+//实体类代码自动生成<#= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff")#>
+
+<# 
+    WriteLine("#region Model");
+    WriteBeginNamespace(ModelNamespace);
+    WriteIndent(1);
+    WriteLine("using System;");
+    WriteIndent(1);
+    WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
+    WriteSummary(MainTableClassName,1);
+    WriteAttribute("Serializable");
+    WriteIndent(1);
+    WriteLine("[Table(\"{0}\")]",MainTableName);
+    WriteBeginPartialClass(MainTableClassName);
+    foreach(Column col in MainTable.Columns){
+        this.WiriteProperty(col);
+    }
+    WriteEndClass();
+    if(DetailTable!=null){
+        this.WriteLine();
+        this.WriteLine();
+        WriteSummary(DetailTableClassName,1);
+        WriteAttribute("Serializable");
+        WriteIndent(1);
+        WriteLine("[Table(\"{0}\")]",DetailTableName);
+        WriteBeginClass(DetailTableClassName);
+        foreach(Column col in DetailTable.Columns){
+            this.WiriteProperty(col);
+        }
+        WriteEndClass();
+    }
+    WriteEndNamespace();
+    WriteLine("#endregion");
+
+    WriteLine("");
+    WriteLine("");
+
+    WriteLine("#region Mapping");
+    WriteBeginNamespace(ModelNamespace+".Mapping");
+    WriteIndent(1);
+    WriteLine("using System.Data.Entity.ModelConfiguration;");
+    WriteSummary("实体映射"+MainTableClassName,1);
+    WriteIndent(1);
+    WriteLine ("internal class "+MainTableClassName+"Mapping : EntityTypeConfiguration<"+MainTableClassName+">{");
+    WriteIndent(2);
+    WriteLine("public "+MainTableClassName+"Mapping(){");
+
+    WriteIndent(3);
+    WriteLine("this.ToTable(\"{0}\");",MainTableName);
+    foreach(Column col in MainTable.Columns){
+        if(col.IsPrimaryKey) {
+            WriteIndent(3);
+            WriteLine("this.HasKey(t => t.{0});",col.MemberName);
+        }
+    }
+
+    foreach(Column col in MainTable.Columns){
+        WriteLine("");
+        WriteSummary(col.MemberName,3);
+        WriteIndent(3);
+        WriteLine("this.Property(t => t.{0})",col.MemberName);
+        if(col.Type.ToString().ToUpper().Equals("INT32")){
+            WriteIndent(4);
+            WriteLine(".IsRequired()");
+        }
+
+        if(col.Type.ToString().ToUpper().Equals("STRING")){
+            WriteIndent(4);
+            WriteLine(".HasMaxLength({0})",col.Length);
+        }
+
+        WriteIndent(4);
+        WriteLine(".HasColumnName(\"{0}\");",col.MemberName);
+    }
+
+    WriteIndent(2);
+    WriteLine("}");
+    WriteEndClass();
+
+    if(DetailTable!=null){
+        WriteLine("");
+        WriteLine("");
+
+        WriteSummary("实体映射"+DetailTableClassName,1);
+        WriteIndent(1);
+        WriteLine ("internal class "+DetailTableClassName+"Mapping : EntityTypeConfiguration<"+DetailTableClassName+">{");
+        WriteIndent(2);
+        WriteLine("public "+DetailTableClassName+"Mapping(){");
+
+        WriteIndent(3);
+        WriteLine("this.ToTable(\"{0}\");",DetailTableName);
+        foreach(Column col in DetailTable.Columns){
+            if(col.IsPrimaryKey) {
+                WriteIndent(3);
+                WriteLine("this.HasKey(t => t.{0});",col.MemberName);
+            }
+        }
+
+        foreach(Column col in DetailTable.Columns){
+            WriteLine("");
+            WriteSummary(col.MemberName,3);
+            WriteIndent(3);
+            WriteLine("this.Property(t => t.{0})",col.MemberName);
+            if(col.Type.ToString().ToUpper().Equals("INT32")){
+                WriteIndent(4);
+                WriteLine(".IsRequired()");
+            }
+
+            if(col.Type.ToString().ToUpper().Equals("STRING")){
+                WriteIndent(4);
+                WriteLine(".HasMaxLength({0})",col.Length);
+            }
+
+            WriteIndent(4);
+            WriteLine(".HasColumnName(\"{0}\");",col.MemberName);
+        }
+
+        WriteIndent(2);
+        WriteLine("}");
+        WriteEndClass();
+    }
+    WriteEndNamespace();
+    WriteLine("#endregion");
+#>

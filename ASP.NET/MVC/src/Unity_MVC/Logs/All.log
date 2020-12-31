@@ -1,0 +1,99 @@
+ %date ****************************begin********************************** %newline2020-09-30 11:29:01,574 [1] DEBUG Unity.MVC5.PreApplicationStartCode [(null)] - 注册PreRequestLifeTimeHttpModel
+2020-09-30 11:29:01,724 [1] INFO  Unity_MVC.MvcApplication [(null)] - 系统物理文件地址：E:\study\后端学习\MVC\src\Unity_MVC\
+2020-09-30 11:29:01,726 [1] INFO  Unity_MVC.MvcApplication [(null)] - 系统虚拟文件地址：/
+2020-09-30 11:29:01,727 [1] INFO  Unity_MVC.MvcApplication [(null)] - 系统应用程序标识：/LM/W3SVC/5/ROOT
+2020-09-30 11:29:01,728 [1] INFO  Unity_MVC.MvcApplication [(null)] - 系统实例所在应用程序域的域标识：/LM/W3SVC/5/ROOT-6-132459101412373202
+2020-09-30 11:29:01,729 [1] INFO  Unity_MVC.MvcApplication [(null)] - 系统Bin文件夹地址：E:\study\后端学习\MVC\src\Unity_MVC\bin\
+2020-09-30 11:29:01,730 [1] INFO  Unity_MVC.MvcApplication [(null)] - IIS版本：10.0
+2020-09-30 11:29:01,731 [1] INFO  Unity_MVC.MvcApplication [(null)] -  .NET Framework 版本：4.5.2
+2020-09-30 11:29:01,731 [1] INFO  Unity_MVC.MvcApplication [(null)] -  程序域基目录：E:\study\后端学习\MVC\src\Unity_MVC\
+2020-09-30 11:29:01,738 [1] DEBUG Unity_MVC.MvcApplication [(null)] - Application_Start: 注册 ASP.NET MVC 应用程序中的所有区域。
+2020-09-30 11:29:01,822 [1] DEBUG Unity_MVC.MvcApplication [(null)] - Application_Start: 注册 默认路由。
+2020-09-30 11:29:01,823 [1] DEBUG Unity_MVC.MvcApplication [(null)] - Application_Start: 设置控制器工厂类。
+2020-09-30 11:29:01,827 [1] DEBUG Unity_MVC.MvcApplication [(null)] - Application_Start: 设置过滤器
+2020-09-30 11:29:01,831 [1] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int
+2020-09-30 11:29:01,838 [1] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的HttpModule["OutputCache","Session","WindowsAuthentication","FormsAuthentication","DefaultAuthentication","RoleManager","UrlAuthorization","FileAuthorization","AnonymousIdentification","Profile","UrlMappingsModule","ServiceModel-4.0","UrlRoutingModule-4.0","ScriptModule-4.0","__DynamicModule_Microsoft.VisualStudio.Web.PageInspector.Runtime.Tracing.PageInspectorHttpModule, Microsoft.VisualStudio.Web.PageInspector.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a_f9f718be-910b-4e11-a982-3aa4e8848ccc","__DynamicModule_System.Web.WebPages.WebPageHttpModule, System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35_47ca2f38-470f-4f36-8944-212465d1342a","__DynamicModule_Unity.MVC5.PreRequestLifeTimeHttpModel, Unity.MVC5, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null_f1aba139-7da1-4417-9a48-1d2601361476"]
+2020-09-30 11:29:01,843 [1] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的委托事件{}
+2020-09-30 11:29:01,844 [1] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的HttpModule["OutputCache","Session","WindowsAuthentication","FormsAuthentication","DefaultAuthentication","RoleManager","UrlAuthorization","FileAuthorization","AnonymousIdentification","Profile","UrlMappingsModule","ServiceModel-4.0","UrlRoutingModule-4.0","ScriptModule-4.0","__DynamicModule_Microsoft.VisualStudio.Web.PageInspector.Runtime.Tracing.PageInspectorHttpModule, Microsoft.VisualStudio.Web.PageInspector.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a_f9f718be-910b-4e11-a982-3aa4e8848ccc","__DynamicModule_System.Web.WebPages.WebPageHttpModule, System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35_47ca2f38-470f-4f36-8944-212465d1342a","__DynamicModule_Unity.MVC5.PreRequestLifeTimeHttpModel, Unity.MVC5, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null_f1aba139-7da1-4417-9a48-1d2601361476"]
+2020-09-30 11:29:01,845 [1] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的委托事件{}
+2020-09-30 11:29:01,877 [1] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.SingletonService：实例化
+2020-09-30 11:29:01,879 [1] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.SingletonService：To Do SomeThing
+2020-09-30 11:29:01,895 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int
+2020-09-30 11:29:01,896 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的HttpModule["OutputCache","Session","WindowsAuthentication","FormsAuthentication","DefaultAuthentication","RoleManager","UrlAuthorization","FileAuthorization","AnonymousIdentification","Profile","UrlMappingsModule","ServiceModel-4.0","UrlRoutingModule-4.0","ScriptModule-4.0","__DynamicModule_Microsoft.VisualStudio.Web.PageInspector.Runtime.Tracing.PageInspectorHttpModule, Microsoft.VisualStudio.Web.PageInspector.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a_f9f718be-910b-4e11-a982-3aa4e8848ccc","__DynamicModule_System.Web.WebPages.WebPageHttpModule, System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35_47ca2f38-470f-4f36-8944-212465d1342a","__DynamicModule_Unity.MVC5.PreRequestLifeTimeHttpModel, Unity.MVC5, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null_f1aba139-7da1-4417-9a48-1d2601361476"]
+2020-09-30 11:29:01,897 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的委托事件{}
+2020-09-30 11:29:01,898 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的HttpModule["OutputCache","Session","WindowsAuthentication","FormsAuthentication","DefaultAuthentication","RoleManager","UrlAuthorization","FileAuthorization","AnonymousIdentification","Profile","UrlMappingsModule","ServiceModel-4.0","UrlRoutingModule-4.0","ScriptModule-4.0","__DynamicModule_Microsoft.VisualStudio.Web.PageInspector.Runtime.Tracing.PageInspectorHttpModule, Microsoft.VisualStudio.Web.PageInspector.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a_f9f718be-910b-4e11-a982-3aa4e8848ccc","__DynamicModule_System.Web.WebPages.WebPageHttpModule, System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35_47ca2f38-470f-4f36-8944-212465d1342a","__DynamicModule_Unity.MVC5.PreRequestLifeTimeHttpModel, Unity.MVC5, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null_f1aba139-7da1-4417-9a48-1d2601361476"]
+2020-09-30 11:29:01,898 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MvcApplication.Int：已注册的委托事件{}
+2020-09-30 11:29:01,899 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.SingletonService：To Do SomeThing
+2020-09-30 11:29:01,901 [41] DEBUG Unity_MVC.MvcApplication [(null)] - =====================BEGIN BeginRequest=============================
+2020-09-30 11:29:01,902 [41] DEBUG Unity_MVC.MvcApplication [(null)] - BeginRequest: 作为执行的 HTTP 管道链中的第一个事件发生，当 ASP.NET 的请求做出响应
+2020-09-30 11:29:01,903 [41] DEBUG Unity_MVC.MvcApplication [(null)] - =====================END BeginRequest=============================
+2020-09-30 11:29:01,919 [41] DEBUG Unity_MVC.MvcApplication [(null)] - AuthenticateRequest:当安全模块已建立的用户标识时出现
+2020-09-30 11:29:01,921 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostAuthenticateRequest:当安全模块已建立的用户标识时出现
+2020-09-30 11:29:01,923 [41] DEBUG Unity_MVC.MvcApplication [(null)] - AuthorizeRequest:安全模块已验证用户身份验证时发生
+2020-09-30 11:29:01,924 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostAuthorizeRequest:当前请求的用户已被授权时发生
+2020-09-30 11:29:01,925 [41] DEBUG Unity_MVC.MvcApplication [(null)] - ResolveRequestCache:在 ASP.NET 完成授权事件以使缓存模块从缓存中为请求提供服务后发生，从而绕过事件处理程序（例如某个页或 XML Web services）的执行。
+2020-09-30 11:29:01,929 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - GetControllerType：获取控制器类型【Home】
+2020-09-30 11:29:01,938 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - SessionStateBehavior：返回控制器的会话行为【Unity_MVC.Controllers.HomeController】
+2020-09-30 11:29:01,945 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostResolveRequestCache:   ASP.NET 将绕过当前事件处理程序的执行，并允许缓存模块以处理从缓存请求时发生。
+2020-09-30 11:29:01,946 [41] DEBUG Unity_MVC.MvcApplication [(null)] - MapRequestHandler:应用程序映射请求处理程(RequestHandler)序时触发
+2020-09-30 11:29:01,947 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostMapRequestHandler:ASP.NET 已映射到相应的事件处理程序的当前请求时出现。
+2020-09-30 11:29:01,949 [41] DEBUG Unity_MVC.MvcApplication [(null)] - AcquireRequestState：  当 ASP.NET 获取与当前的请求相关联的当前状态 （例如，会话状态）。
+2020-09-30 11:29:01,950 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostAcquireRequestState:获取与当前的请求相关联的请求状态 （例如，会话状态） 时发生。
+2020-09-30 11:29:01,960 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PreRequestHandlerExecute: ASP.NET 开始执行事件处理程序 （例如，一个页面或 XML Web 服务） 之前发生。
+2020-09-30 11:29:01,971 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - CreateController：创建控制器【Home】
+2020-09-30 11:29:01,972 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - GetControllerType：获取控制器类型【Home】
+2020-09-30 11:29:01,973 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - GetControllerInstance：获取控制器实例【Unity_MVC.Controllers.HomeController】
+2020-09-30 11:29:01,998 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.RequestLiftTimeSerivce：实例化
+2020-09-30 11:29:02,001 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - HomeController 构造函数：创建HomeController控制器，含一个参数
+2020-09-30 11:29:02,003 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - BeginExecute：开始执行指定的请求上下文
+2020-09-30 11:29:02,006 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - Initialize：对调用构造函数时可能不可用的数据进行初始化。
+2020-09-30 11:29:02,008 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - BeginExecuteCore：开始调用当前控制器上下文中的操作
+2020-09-30 11:29:02,011 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - CreateTempDataProvider：创建临时数据提供程序
+2020-09-30 11:29:02,014 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - CreateActionInvoker：创建操作调用程序
+2020-09-30 11:29:02,056 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnAuthentication：在进行身份验证时调用
+2020-09-30 11:29:02,057 [41] DEBUG Unity_MVC.App_Start.Filters.AuthenticationFilter [(null)] - OnAuthentication：开始身份验证
+2020-09-30 11:29:02,059 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnAuthorization：在进行授权时调用
+2020-09-30 11:29:02,060 [41] DEBUG Unity_MVC.App_Start.Filters.AuthorizationFilter [(null)] - OnAuthorization：授权验证
+2020-09-30 11:29:02,068 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnActionExecuting：在调用操作方法前调用
+2020-09-30 11:29:02,069 [41] DEBUG Unity_MVC.App_Start.Filters.ActionFilter [(null)] - OnActionExecuting：在执行操作方法之前调用
+2020-09-30 11:29:02,070 [41] DEBUG Unity_MVC.App_Start.Filters.MyActionFilterAttribute [(null)] - OnActionExecuting：在执行操作方法之前由 ASP.NET MVC 框架调用。
+2020-09-30 11:29:02,075 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - EndExecute：结束当前控制器上下文中的操作的调用
+2020-09-30 11:29:02,076 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - EndExecuteCore：结束执行核心
+2020-09-30 11:29:02,085 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - Index
+2020-09-30 11:29:02,086 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.RequestLiftTimeSerivce：To Do SomeThing
+2020-09-30 11:29:02,087 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.SingletonService：To Do SomeThing
+2020-09-30 11:29:02,088 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：实例化
+2020-09-30 11:29:02,089 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：To Do SomeThing
+2020-09-30 11:29:02,090 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：销毁
+2020-09-30 11:29:02,090 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：实例化
+2020-09-30 11:29:02,091 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：To Do SomeThing
+2020-09-30 11:29:02,092 [41] DEBUG Unity_MVC.DDD.Services.BaseService [(null)] - Unity_MVC.DDD.Services.TransientLifetimeService：销毁
+2020-09-30 11:29:02,099 [41] DEBUG Unity_MVC.App_Start.Filters.MyActionFilterAttribute [(null)] - OnActionExecuted：在执行操作方法后由 ASP.NET MVC 框架调用。
+2020-09-30 11:29:02,101 [41] DEBUG Unity_MVC.App_Start.Filters.ActionFilter [(null)] - OnActionExecuted：在执行操作方法后调用
+2020-09-30 11:29:02,103 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnActionExecuted：在调用操作方法后调用
+2020-09-30 11:29:02,104 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnAuthenticationChallenge：在进行身份验证质询时调用
+2020-09-30 11:29:02,106 [41] DEBUG Unity_MVC.App_Start.Filters.AuthenticationFilter [(null)] - OnAuthentication：身份验证质询
+2020-09-30 11:29:02,108 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnResultExecuting：在执行由操作方法返回的操作结果前调用
+2020-09-30 11:29:02,109 [41] DEBUG Unity_MVC.App_Start.Filters.ResultFilter [(null)] - OnResultExecuting：在操作结果执行之前调用
+2020-09-30 11:29:02,110 [41] DEBUG Unity_MVC.App_Start.Filters.MyActionFilterAttribute [(null)] - OnResultExecuted： 在执行操作结果之前由 ASP.NET MVC 框架调用。
+2020-09-30 11:29:02,190 [41] DEBUG Unity_MVC.App_Start.Filters.MyActionFilterAttribute [(null)] - OnResultExecuted： 在执行操作结果后由 ASP.NET MVC 框架调用。
+2020-09-30 11:29:02,191 [41] DEBUG Unity_MVC.App_Start.Filters.ResultFilter [(null)] - OnResultExecuted：在操作结果执行后调用
+2020-09-30 11:29:02,192 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - OnResultExecuted：在执行由操作方法返回的操作结果后调用
+2020-09-30 11:29:02,194 [41] DEBUG Unity_MVC.App_Start.MyControllerFactory [(null)] - GetControllerType：释放控制器【Unity_MVC.Controllers.HomeController】
+2020-09-30 11:29:02,195 [41] DEBUG Unity_MVC.Controllers.HomeController [(null)] - Dispose：释放控制器
+2020-09-30 11:29:02,198 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostRequestHandlerExecute:当 ASP.NET 事件处理程序 （例如，一个页面或 XML Web 服务） 完成执行时发生。
+2020-09-30 11:29:02,199 [41] DEBUG Unity_MVC.MvcApplication [(null)] - ReleaseRequestState：ASP.NET 完成执行所有请求事件处理程序后发生。 此事件会导致状态模块保存当前的状态数据。
+2020-09-30 11:29:02,200 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostReleaseRequestState：当 ASP.NET 已完成执行所有请求事件处理程序和存储数据的请求状态时发生。
+2020-09-30 11:29:02,203 [41] DEBUG Unity_MVC.MvcApplication [(null)] - UpdateRequestCache：当 ASP.NET 完成执行事件处理程序，以便让缓存模块存储将用于为从缓存中的后续请求提供服务的响应时发生。
+2020-09-30 11:29:02,204 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostUpdateRequestCache：当 ASP.NET 完成更新的缓存模块和存储用于为从缓存中的后续请求提供服务的响应时发生。
+2020-09-30 11:29:02,205 [41] DEBUG Unity_MVC.MvcApplication [(null)] - LogRequest：ASP.NET 执行当前请求的任何日志记录之前发生。
+2020-09-30 11:29:02,206 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PostLogRequest:当 ASP.NET 已完成处理的事件处理程序时发生 System.Web.HttpApplication.LogRequest 事件。
+2020-09-30 11:29:02,213 [41] DEBUG Unity_MVC.MvcApplication [(null)] - EndRequest： 作为执行的 HTTP 管道链中的最后一个事件发生，当 ASP.NET 的请求做出响应。
+2020-09-30 11:29:02,215 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PreSendRequestHeaders:ASP.NET 将 HTTP 请求头发送到客户端之前触发。
+2020-09-30 11:29:02,216 [41] DEBUG Unity_MVC.MvcApplication [(null)] - PreSendRequestContent:ASP.NET 将内容发送到客户端之前发生。
+2020-09-30 11:29:02,217 [41] DEBUG Unity_MVC.MvcApplication [(null)] - RequestCompleted:ASP.NET 已释放与请求相关联的托管的对象时发生。
+2020-09-30 12:05:12,791 [53] DEBUG Unity_MVC.MvcApplication [(null)] - Dispose 应用程序注销
+2020-09-30 12:05:12,793 [53] DEBUG Unity_MVC.MvcApplication [(null)] - Disposed:应用程序销毁时触发
+2020-09-30 12:05:12,796 [53] DEBUG Unity_MVC.MvcApplication [(null)] - Dispose 应用程序注销
+2020-09-30 12:05:12,797 [53] DEBUG Unity_MVC.MvcApplication [(null)] - Disposed:应用程序销毁时触发
+ %date ******************************end******************************** %newline %date ******************************end******************************** %newline

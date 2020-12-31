@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Signal MoveShape Demo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/easyui")
+
+<style type="text/css">
+    #shape {
+        width: 200px;
+        height: 200px;
+        background-color: cadetblue
+    }
+</style>
+
+<div id="shape"></div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/easyui")
+    @Scripts.Render("~/bundles/signalR")
+    <!-- ~/signalr/hubs 必须加载 -->
+    <script type="text/javascript" src="~/signalr/hubs"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var moveShapeHub = $.connection.moveShapeHub,   // 获取连接
+                $shape = $("#shape"),
+                shapeModel = {
+                    left: 0,
+                    top: 0
+                },
+                moved = false,
+                updateRate=100; // 刷新评率
+            // 定义连接客户端updateShape方法
+            moveShapeHub.client.updateShape = function (model) {
+                shapeModel = model;
+                console.log(model);
+                $shape.animate(shapeModel, updateRate);
+                //$shape.css({ left: model.left, top: model.top });
+            };
+
+            // 开启连接
+            $.connection.hub.start().done(function () {
+                $shape.draggable({
+                    onDrag: function () {
+                        shapeModel = $shape.offset();
+                        moved = true;
+                    }
+                });
+                setInterval(updateShape, updateRate);
+            });
+
+            function updateShape() {
+                if (moved)
+                    // 调用服务中的UpdateModel方法
+                    moveShapeHub.server.updateModel(shapeModel);
+                moved = false;
+            }
+        });
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<p>
+    用户： @ViewBag.Name
+</p>
+<p>
+    .NET Framework 角色声明标识的声明类型： @ViewBag.RoleClaimType
+</p>
+<p>
+    System.Security.Claims.ClaimsIdentity.Name 属性的声明的身份： @ViewBag.NameClaimType
+</p>
+<p>
+    票据版本
+    ViewBag.Ticket.Version： @ViewBag.Ticket.Version
+</p>
+<p>
+    票据名称
+    ViewBag.Ticket.Name： @ViewBag.Ticket.Name
+</p>
+<p>
+    票据到期时间
+    ViewBag.Ticket.Expiration： @ViewBag.Ticket.Expiration.ToString("yyyy-MM-dd HH:mm:ss")
+</p>
+<p>
+    票据颁发时间
+    ViewBag.Ticket.IssueDate： @ViewBag.Ticket.IssueDate.ToString("yyyy-MM-dd HH:mm:ss")
+</p>
+<p>
+    票据信息的 cookie 持久性
+    ViewBag.Ticket.IsPersistent： @ViewBag.Ticket.IsPersistent
+</p>
+<p>
+    票据已到期
+    ViewBag.Ticket.Expired： @ViewBag.Ticket.Expired
+</p>
+<p>
+    用户的字符串
+    ViewBag.Ticket.UserData： @ViewBag.Ticket.UserData
+</p>
+<p>
+    票据证的 cookie 路径
+    ViewBag.Ticket.CookiePath： @ViewBag.Ticket.CookiePath
+</p>
+

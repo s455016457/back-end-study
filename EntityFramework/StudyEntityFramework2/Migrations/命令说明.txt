@@ -1,0 +1,11 @@
+﻿先后使用了一下命令：
+Enable-Migrations			迁移数据库
+
+Add-Migration AddUrl		为Blog添加Url列
+Update-DataBase				将更改迁移进数据库
+
+Add-Migration AddUser		添加Urser表
+Update-DataBase				将更改迁移进数据库
+
+ Add-Migration ChangeDisplayName	更改DisplayName列名
+Update-DataBase				将更改迁移进数据库

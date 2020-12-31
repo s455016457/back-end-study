@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Authentication
+
+<h2>HttpContext.User.Claims</h2>
+
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
+<h2>AuthenticationProperties</h2>
+
+<dl>
+    @{
+        var property = (await Context.AuthenticateAsync()).Properties;
+        foreach (var prop in property.Items)
+        {
+            <dt>@prop.Key</dt>
+            <dd>@prop.Value</dd>
+        }
+
+        <dt>授权时间：</dt>
+        <dd>@(property.IssuedUtc.HasValue? property.IssuedUtc.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss"):"Undfind")</dd>
+
+        <dt>过期时间：</dt>
+        <dd>@(property.IssuedUtc.HasValue? property.ExpiresUtc.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss"):"Undfind")</dd>
+    }
+</dl>
+
+<a  class="btn btn-default" asp-controller="Account" asp-action="Logout">Logout</a>

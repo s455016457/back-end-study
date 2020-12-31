@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5FE41F8-2D8A-4D4D-8638-2C8381BA67E5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Test</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="Common.Extended\TestObjectValueEquest.cs" />
+    <Compile Include="Dao.Ef\TestTransaction.cs" />
+    <Compile Include="Dao.Ef\TestUpdateTransaction.cs" />
+    <Compile Include="Dao.Ef\Users.cs" />
+    <Compile Include="DDD\Domain\AggregateRoot\PoRoot.cs" />
+    <Compile Include="DDD\Domain\Aggregate\PoDetailAggregate.cs" />
+    <Compile Include="DDD\Domain\Entity\PoDetailEntity.cs" />
+    <Compile Include="DDD\Domain\Entity\PoDetailTotalQtyEntity.cs" />
+    <Compile Include="DDD\Domain\Entity\PoEntity.cs" />
+    <Compile Include="DDD\Domain\Entity\PoTotalAmountEntitiy.cs" />
+    <Compile Include="DDD\Store\DDDTestContext.cs" />
+    <Compile Include="DDD\Store\GrnDetail.cs" />
+    <Compile Include="DDD\Store\Inventory.cs" />
+    <Compile Include="DDD\Store\Po.cs" />
+    <Compile Include="DDD\Store\PoDetail.cs" />
+    <Compile Include="DDD\Test\TestEF.cs" />
+    <Compile Include="DDD\Test\TestOptimisticLock.cs" />
+    <Compile Include="Domain.Repository\ItemTypeRepositoryTest.cs" />
+    <Compile Include="DomainEvent\DomainEventTest2.cs" />
+    <Compile Include="DomainEvent\ChinaSayHello.cs" />
+    <Compile Include="DomainEvent\DomainEventHandlerStore.cs" />
+    <Compile Include="DomainEvent\DomainEventTest.cs" />
+    <Compile Include="DomainEvent\SayEventArgs.cs" />
+    <Compile Include="lambda\BuildDynamicQueriesTest1.cs" />
+    <Compile Include="lambda\BuildDynamicQueriesTest2.cs" />
+    <Compile Include="lambda\LambdaTest1.cs" />
+    <Compile Include="lambda\LambdaTest2.cs" />
+    <Compile Include="lambda\ParsingExpressionTrees.cs" />
+    <Compile Include="lambda\ParsingExpressionTreesTest.cs" />
+    <Compile Include="lambda\TestQueryExtensions.cs" />
+    <Compile Include="Linq\TestZip.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Extended\Common.Extended.csproj">
+      <Project>{f1f894cb-cb23-421e-9360-649aeee533f9}</Project>
+      <Name>Common.Extended</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataStore\DAO\DAO.EF.csproj">
+      <Project>{85eaba82-d9cc-40a9-8ac3-e721ace16b06}</Project>
+      <Name>DAO.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\DomainEvent\Domain.Event.csproj">
+      <Project>{eeb758d8-43e1-4d09-89a2-43fb451caaac}</Project>
+      <Name>Domain.Event</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Domain\Domain.csproj">
+      <Project>{d946f4dc-d5a2-4dee-82d1-d5dc9e16dfd2}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,8 @@
+﻿@model ASP.NET.MVC.Areas.Restaurant.Models.Restaurant
+
+<p>@Model.Name</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create",new { id=Model.Id},null)
+</p>
+@Html.Partial("_Reviews", Model.Reviews, null);

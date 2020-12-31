@@ -1,0 +1,60 @@
+2020-09-30 12:12:18,964 [14] INFO  MVC_Pipeline.MvcApplication [(null)] -  dispose application 
+2020-09-30 12:12:31,667 [13] INFO  MyControllerFactory [(null)] - GetControllerType  检索指定名称和请求上下文的控制器类型。
+2020-09-30 12:12:31,668 [13] INFO  MyControllerFactory [(null)] - SessionStateBehavior  返回控制器的会话行为。
+2020-09-30 12:12:31,670 [13] INFO  MyControllerFactory [(null)] - CreateController  使用指定的请求上下文来创建指定的控制器。
+2020-09-30 12:12:31,674 [13] INFO  MyControllerFactory [(null)] - GetControllerType  检索指定名称和请求上下文的控制器类型。
+2020-09-30 12:12:31,675 [13] INFO  MyControllerFactory [(null)] - GetControllerInstance  检索指定请求上下文和控制器类型的控制器实例。
+2020-09-30 12:12:31,676 [13] INFO  HelloWorldController [(null)] - BeginExecute 开始执行指定的请求上下文 
+2020-09-30 12:12:31,677 [13] INFO  HelloWorldController [(null)] - BeginExecuteCore 开始调用当前控制器上下文中的操作 
+2020-09-30 12:12:31,678 [13] INFO  HelloWorldController [(null)] - CreateTempDataProvider 创建临时数据提供程序 
+2020-09-30 12:12:31,679 [13] INFO  HelloWorldController [(null)] - CreateActionInvoker 创建操作调用程序 
+2020-09-30 12:12:31,680 [13] INFO  HelloWorldController [(null)] - OnAuthentication 身份认证  在进行授权时调用
+2020-09-30 12:12:31,681 [13] INFO  MyAuthenticationFilter(身份过滤器) [(null)] - OnAuthentication 身份认证  在进行授权时调用
+2020-09-30 12:12:31,682 [13] INFO  HelloWorldController [(null)] - OnAuthorization 授权认证  在进行授权时调用
+2020-09-30 12:12:31,685 [13] INFO  MyAuthorizationFilter(授权过滤器) [(null)] - OnAuthorization 授权认证  在进行授权时调用
+2020-09-30 12:12:31,689 [13] INFO  HelloWorldController [(null)] - OnActionExecuting 在Action之前执行 
+2020-09-30 12:12:31,690 [13] INFO  MyActionFilter(操作过滤器) [(null)] - OnActionExecuting 在Action之前执行
+2020-09-30 12:12:31,691 [13] INFO  HelloWorldController [(null)] - EndExecute 结束当前控制器上下文中的操作的调用 
+2020-09-30 12:12:31,693 [13] INFO  HelloWorldController [(null)] - EndExecuteCore 结束执行核心 
+2020-09-30 12:12:31,694 [13] INFO  HelloWorldController [(null)] - 执行Index Action
+2020-09-30 12:12:31,695 [13] INFO  MyActionFilter(操作过滤器) [(null)] - OnActionExecuted 在Action之后执行
+2020-09-30 12:12:31,696 [13] INFO  HelloWorldController [(null)] - OnActionExecuted 在Action之后执行 
+2020-09-30 12:12:31,698 [13] INFO  HelloWorldController [(null)] - OnAuthenticationChallenge 在身份认证质询时调用
+2020-09-30 12:12:31,699 [13] INFO  MyAuthenticationFilter(身份过滤器) [(null)] - OnAuthenticationChallenge 在身份认证质询时调用
+2020-09-30 12:12:31,700 [13] INFO  HelloWorldController [(null)] - OnResultExecuting 在执行由操作方法返回的操作结果前调用 ，在找到view或写入http response前执行
+2020-09-30 12:12:31,701 [13] INFO  MyResultFilter(结果过滤器) [(null)] - OnResultExecuting 在执行由操作方法返回的操作结果前调用 ，在找到view或写入http response前执行
+2020-09-30 12:12:31,705 [13] INFO  MyResultFilter(结果过滤器) [(null)] - OnResultExecuted 在执行由操作方法返回的操作结果后调用 ,在写入http Response后执行
+2020-09-30 12:12:31,707 [13] INFO  HelloWorldController [(null)] - OnResultExecuted 在执行由操作方法返回的操作结果后调用 ,在写入http Response后执行
+2020-09-30 12:12:31,708 [13] INFO  MyControllerFactory [(null)] - ReleaseController  释放指定的控制器。
+2020-09-30 12:12:31,709 [13] INFO  HelloWorldController [(null)] - Dispose 释放非托管资源和托管资源（后者为可选项） 
+2020-09-30 12:12:48,979 [8] INFO  MVC_Pipeline.MvcApplication [(null)] -  dispose application 
+2020-09-30 12:13:00,168 [14] INFO  MyControllerFactory [(null)] - GetControllerType  检索指定名称和请求上下文的控制器类型。
+2020-09-30 12:13:00,169 [14] INFO  MyControllerFactory [(null)] - SessionStateBehavior  返回控制器的会话行为。
+2020-09-30 12:13:00,171 [14] INFO  MyControllerFactory [(null)] - CreateController  使用指定的请求上下文来创建指定的控制器。
+2020-09-30 12:13:00,172 [14] INFO  MyControllerFactory [(null)] - GetControllerType  检索指定名称和请求上下文的控制器类型。
+2020-09-30 12:13:00,174 [14] INFO  MyControllerFactory [(null)] - GetControllerInstance  检索指定请求上下文和控制器类型的控制器实例。
+2020-09-30 12:13:00,176 [14] INFO  HelloWorldController [(null)] - BeginExecute 开始执行指定的请求上下文 
+2020-09-30 12:13:00,177 [14] INFO  HelloWorldController [(null)] - BeginExecuteCore 开始调用当前控制器上下文中的操作 
+2020-09-30 12:13:00,178 [14] INFO  HelloWorldController [(null)] - CreateTempDataProvider 创建临时数据提供程序 
+2020-09-30 12:13:00,180 [14] INFO  HelloWorldController [(null)] - CreateActionInvoker 创建操作调用程序 
+2020-09-30 12:13:00,181 [14] INFO  HelloWorldController [(null)] - OnAuthentication 身份认证  在进行授权时调用
+2020-09-30 12:13:00,182 [14] INFO  MyAuthenticationFilter(身份过滤器) [(null)] - OnAuthentication 身份认证  在进行授权时调用
+2020-09-30 12:13:00,185 [14] INFO  HelloWorldController [(null)] - OnAuthorization 授权认证  在进行授权时调用
+2020-09-30 12:13:00,186 [14] INFO  MyAuthorizationFilter(授权过滤器) [(null)] - OnAuthorization 授权认证  在进行授权时调用
+2020-09-30 12:13:00,187 [14] INFO  HelloWorldController [(null)] - OnActionExecuting 在Action之前执行 
+2020-09-30 12:13:00,191 [14] INFO  MyActionFilter(操作过滤器) [(null)] - OnActionExecuting 在Action之前执行
+2020-09-30 12:13:00,192 [14] INFO  HelloWorldController [(null)] - EndExecute 结束当前控制器上下文中的操作的调用 
+2020-09-30 12:13:00,194 [14] INFO  HelloWorldController [(null)] - EndExecuteCore 结束执行核心 
+2020-09-30 12:13:00,195 [14] INFO  HelloWorldController [(null)] - 执行Index Action
+2020-09-30 12:13:00,196 [14] INFO  MyActionFilter(操作过滤器) [(null)] - OnActionExecuted 在Action之后执行
+2020-09-30 12:13:00,197 [14] INFO  HelloWorldController [(null)] - OnActionExecuted 在Action之后执行 
+2020-09-30 12:13:00,198 [14] INFO  HelloWorldController [(null)] - OnAuthenticationChallenge 在身份认证质询时调用
+2020-09-30 12:13:00,200 [14] INFO  MyAuthenticationFilter(身份过滤器) [(null)] - OnAuthenticationChallenge 在身份认证质询时调用
+2020-09-30 12:13:00,201 [14] INFO  HelloWorldController [(null)] - OnResultExecuting 在执行由操作方法返回的操作结果前调用 ，在找到view或写入http response前执行
+2020-09-30 12:13:00,202 [14] INFO  MyResultFilter(结果过滤器) [(null)] - OnResultExecuting 在执行由操作方法返回的操作结果前调用 ，在找到view或写入http response前执行
+2020-09-30 12:13:00,204 [14] INFO  MyResultFilter(结果过滤器) [(null)] - OnResultExecuted 在执行由操作方法返回的操作结果后调用 ,在写入http Response后执行
+2020-09-30 12:13:00,205 [14] INFO  HelloWorldController [(null)] - OnResultExecuted 在执行由操作方法返回的操作结果后调用 ,在写入http Response后执行
+2020-09-30 12:13:00,207 [14] INFO  MyControllerFactory [(null)] - ReleaseController  释放指定的控制器。
+2020-09-30 12:13:00,208 [14] INFO  HelloWorldController [(null)] - Dispose 释放非托管资源和托管资源（后者为可选项） 
+2020-09-30 12:13:18,980 [13] INFO  MVC_Pipeline.MvcApplication [(null)] -  dispose application 
+2020-09-30 12:13:48,981 [16] INFO  MVC_Pipeline.MvcApplication [(null)] -  dispose application 

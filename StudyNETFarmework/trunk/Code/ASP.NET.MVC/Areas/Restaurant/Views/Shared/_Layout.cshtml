@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div style="height:100px"></div>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height:130px">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar">Button span</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/all")
+    <script type="text/javascript">
+        // 鼠标离开输入框时验证输入框
+        $(function () {
+            $("input[data-val='true']").bind("blur", function () {
+                //console.log(this);
+                //console.log("验证");
+                //$(this).parents("form").validate().form();
+                $(this).valid();
+            });
+
+            $("input[data-autocomplete]").each(autocomplete)
+
+            // 在class包含 container 的元素上绑定click事件，只有元素是 class是pagedList下 li没有classname=disabled 的a元素才触发事件
+            $(".container").on("click", ".pagedList li:not('.disabled') a", getPage);
+        })
+
+        function getPage() {
+            var $a = $(this);
+            var $form = $("form:first");
+
+            var options = {
+                url: $a.attr("href"),
+                type: 'get',
+                data: $form.serialize()
+            }
+
+            $.ajax(options).done(function (data) {
+                var targetId = $a.parents("div.pagedList:first").attr("data-target");
+                var $target = $(targetId);
+                var $newHtml = $(data);
+                $target.replaceWith($newHtml);
+                $newHtml.find(".table").effect("highlight");
+            });
+            return false;
+        }
+
+        function submitAutocompleteForm(event,ui) {
+            var $input = $(this);
+            $input.val(ui.item.label);
+
+            var $form = $input.parents("form:first");
+            $form.submit();
+        }
+
+        function autocomplete() {
+            var $input = $(this);
+            var options = {
+                source: $input.attr("data-autocomplete"),
+                select:submitAutocompleteForm
+            };
+            $input.autocomplete(options);
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

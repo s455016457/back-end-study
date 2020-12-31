@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Plugin.Manager.Plugin>
+@{
+    ViewBag.Title = "Plugin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Plugin</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <h2>@item.PluginFriendlyName</h2>
+                <p>@item.Group</p>
+                <p>@item.PluginName</p>
+                <p>安装状态： @item.Installed</p>
+                <p>
+                    @item.Description
+                </p>
+                <p><a class="btn btn-default" href="/@item.IndexViewPath"> <img style="width: 150px;" src="/Plugins/Plugin1/Content/Images/preview.png" title="点击进入插件" /></a></p>
+            </div>
+        }
+        <div class="col-md-4">
+            @PartialExtensions.Partial(Html, "~/Plugins/Plugin1/Views/Plugin1/PreviewView.cshtml")
+        </div>
+    </div>
+</div>

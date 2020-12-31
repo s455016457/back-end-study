@@ -1,0 +1,20 @@
+@page
+@model HostingStartupModel
+@{
+    ViewData["Title"] = "托管启动 page";
+}
+
+<div class="text-center">
+    <h3 class="display-4">托管启动</h3>
+    <div>ServiceKey_Development_Library：@Model.ServiceKey_Development_Library</div>
+    <div>ServiceKey_Production_Library:@Model.ServiceKey_Production_Library</div>
+    <div>ServiceKey_ConfigurationKey1:@Model.ServiceKey_ConfigurationKey1</div>
+    <div>ServiceKey_ConfigurationKey2:@Model.ServiceKey_ConfigurationKey2</div>
+
+    <hr/>
+
+    <div>ServiceKey_Development_Package:@Model.ServiceKey_Development_Package</div>
+    <div>ServiceKey_Production_Package:@Model.ServiceKey_Production_Package</div>
+    <div>ServiceKey_ConfigurationPackageKey1:@Model.ServiceKey_ConfigurationPackageKey1</div>
+    <div>ServiceKey_ConfigurationPackageKey2:@Model.ServiceKey_ConfigurationPackageKey2</div>
+</div>
